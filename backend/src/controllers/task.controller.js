@@ -27,16 +27,34 @@ export const createTask = async (req, res) => {
   }
 };
 
-// Fetch all tasks for a user
+// Fetch all tasks for a user with pagination
 export const getTasks = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
 
-    const tasks = await Task.find({ userId }).sort({ createdAt: -1 });
+    // Calculate skip value
+    const skip = (page - 1) * limit;
+
+    // Get total count of tasks
+    const totalTasks = await Task.countDocuments({ userId });
+
+    // Get paginated tasks
+    const tasks = await Task.find({ userId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({
       message: 'Tasks fetched successfully',
       tasks,
+      pagination: {
+        currentPage: page,
+        pageSize: limit,
+        totalTasks,
+        totalPages: Math.ceil(totalTasks / limit),
+      },
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
