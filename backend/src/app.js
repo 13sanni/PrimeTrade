@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import authrouter from './routes/auth.routes.js';
 import taskRouter from './routes/task.routes.js';
+import { errorHandler } from './middleware/error.middleware.js';
 
 const app = express();
 
@@ -20,10 +21,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({ message: 'Server is running' });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Internal server error', error: err.message });
-});
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 export default app;
