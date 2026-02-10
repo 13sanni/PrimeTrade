@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import authRoutes from '../routes/auth.routes.js';
+import authrouter from './routes/auth.routes.js';
 
 const app = express();
 
@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/user', authRoutes);
+app.use('/api/user', authrouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
