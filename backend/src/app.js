@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import authrouter from './routes/auth.routes.js';
+import taskRouter from './routes/task.routes.js';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/user', authrouter);
+app.use('/api/tasks', taskRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
