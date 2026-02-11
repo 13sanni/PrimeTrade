@@ -282,7 +282,7 @@ const Dashboard = () => {
               <button
                 type="submit"
                 disabled={creating}
-                className="w-full rounded-xl bg-gradient-to-r from-teal-600 to-cyan-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full rounded-xl bg-linear-to-r from-teal-600 to-cyan-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {creating ? 'Creating...' : 'Create task'}
               </button>
