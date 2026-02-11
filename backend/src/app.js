@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import 'dotenv/config';
 import authrouter from './routes/auth.routes.js';
 import taskRouter from './routes/task.routes.js';
 import { errorHandler } from './middleware/error.middleware.js';

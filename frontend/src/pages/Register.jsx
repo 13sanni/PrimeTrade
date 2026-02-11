@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion as Motion, useReducedMotion } from 'framer-motion'
+import { Link, useNavigate } from 'react-router-dom'
 import { registerUser } from '../api/auth'
 
 const Register = () => {
+  const navigate = useNavigate()
   const prefersReducedMotion = useReducedMotion()
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [status, setStatus] = useState({
@@ -57,6 +59,7 @@ const Register = () => {
       })
 
       setForm({ name: '', email: '', password: '' })
+      navigate('/login')
     } catch (error) {
       const apiErrors = error?.details?.errors
       const message = Array.isArray(apiErrors)
@@ -72,50 +75,47 @@ const Register = () => {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl" />
-
-      <div className="mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-6 py-16 lg:grid-cols-2">
-        <motion.div
+    <div className="min-h-screen bg-[radial-gradient(circle_at_12%_14%,rgba(20,184,166,0.16),transparent_40%),radial-gradient(circle_at_88%_8%,rgba(245,158,11,0.2),transparent_44%),linear-gradient(180deg,#f8f5ef_0%,#f3eee3_100%)] text-slate-900">
+      <div className="mx-auto grid min-h-screen max-w-6xl items-center gap-10 px-6 py-14 lg:grid-cols-2">
+        <Motion.div
           className="space-y-6"
           initial={prefersReducedMotion ? false : 'hidden'}
           animate={prefersReducedMotion ? false : 'visible'}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           variants={fadeUp}
         >
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.26em] text-teal-800">
             PrimeTrade
           </p>
-          <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+          <h1 className="text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
             Create your account
           </h1>
-          <p className="text-base text-slate-300 sm:text-lg">
+          <p className="text-base text-slate-600 sm:text-lg">
             Manage tasks, track progress, and stay focused. Your workspace is
             ready the moment you sign up.
           </p>
-          <div className="flex flex-wrap gap-3 text-sm text-slate-400">
-            <span className="rounded-full border border-slate-700 px-3 py-1">
+          <div className="flex flex-wrap gap-2">
+            <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-800">
               Secure JWT auth
             </span>
-            <span className="rounded-full border border-slate-700 px-3 py-1">
+            <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-800">
               Task management
             </span>
-            <span className="rounded-full border border-slate-700 px-3 py-1">
-              Fast & responsive
+            <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-800">
+              Fast and responsive
             </span>
           </div>
-        </motion.div>
+        </Motion.div>
 
-        <motion.div
-          className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-8 shadow-2xl shadow-slate-950/40 backdrop-blur"
+        <Motion.div
+          className="rounded-2xl border border-amber-100 bg-white/90 p-8 shadow-xl shadow-amber-100/60 backdrop-blur"
           initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.98 }}
           animate={prefersReducedMotion ? false : { opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
         >
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="space-y-2">
-              <label className="text-sm text-slate-200">Full name</label>
+              <label className="text-sm font-medium text-slate-700">Full name</label>
               <input
                 name="name"
                 type="text"
@@ -123,12 +123,12 @@ const Register = () => {
                 value={form.name}
                 onChange={handleChange}
                 autoComplete="name"
-                className="w-full rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm text-slate-200">Email</label>
+              <label className="text-sm font-medium text-slate-700">Email</label>
               <input
                 name="email"
                 type="email"
@@ -136,12 +136,12 @@ const Register = () => {
                 value={form.email}
                 onChange={handleChange}
                 autoComplete="email"
-                className="w-full rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm text-slate-200">Password</label>
+              <label className="text-sm font-medium text-slate-700">Password</label>
               <input
                 name="password"
                 type="password"
@@ -149,38 +149,34 @@ const Register = () => {
                 value={form.password}
                 onChange={handleChange}
                 autoComplete="new-password"
-                className="w-full rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
               />
             </div>
 
             {status.error ? (
-              <p className="text-sm text-rose-300" role="alert">
-                {status.error}
-              </p>
+              <p className="text-sm text-rose-600" role="alert">{status.error}</p>
             ) : null}
 
             {status.success ? (
-              <p className="text-sm text-emerald-300" role="status">
-                {status.success}
-              </p>
+              <p className="text-sm text-emerald-600" role="status">{status.success}</p>
             ) : null}
 
             <button
               type="submit"
               disabled={status.loading}
-              className="w-full rounded-lg bg-gradient-to-r from-cyan-400 to-indigo-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-cyan-500/30 disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-xl bg-gradient-to-r from-teal-600 to-cyan-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {status.loading ? 'Creating account...' : 'Create account'}
             </button>
 
-            <p className="text-center text-sm text-slate-400">
+            <p className="text-center text-sm text-slate-600">
               Already have an account?{' '}
-              <a className="text-cyan-300 hover:text-cyan-200" href="/login">
+              <Link className="font-semibold text-teal-700 hover:text-teal-900" to="/login">
                 Sign in
-              </a>
+              </Link>
             </p>
           </form>
-        </motion.div>
+        </Motion.div>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { apiRequest, setAuthToken } from './client'
+import { apiRequest } from './client'
 
 export const registerUser = (payload) =>
   apiRequest('/api/user/signup', {
@@ -7,14 +7,20 @@ export const registerUser = (payload) =>
   })
 
 export const loginUser = async (payload) => {
-  const data = await apiRequest('/api/user/login', {
+  return apiRequest('/api/user/login', {
     method: 'POST',
     body: payload,
   })
-
-  if (data?.token) {
-    setAuthToken(data.token)
-  }
-
-  return data
 }
+
+export const getUserProfile = () =>
+  apiRequest('/api/user/profile', {
+    auth: true,
+  })
+
+export const updateUserProfile = (payload) =>
+  apiRequest('/api/user/profile', {
+    method: 'PUT',
+    body: payload,
+    auth: true,
+  })

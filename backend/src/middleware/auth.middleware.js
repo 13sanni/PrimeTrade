@@ -2,6 +2,12 @@ import jwt from 'jsonwebtoken';
 
 export const protect = (req, res, next) => {
   try {
+    const jwtSecret = process.env.JWT_SECRET;
+
+    if (!jwtSecret) {
+      return res.status(500).json({ message: 'JWT_SECRET is not configured on the server' });
+    }
+
     // Get token from Authorization header
     const token = req.headers.authorization?.split(' ')[1];
 
@@ -10,7 +16,7 @@ export const protect = (req, res, next) => {
     }
 
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, jwtSecret);
     
     // Attach user info to request object
     req.user = decoded;

@@ -27,20 +27,29 @@ export const createTask = asyncHandler(async (req, res) => {
 // Fetch all tasks for a user with pagination
 export const getTasks = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+  const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 10, 1), 50);
+  const search = typeof req.query.search === 'string' ? req.query.search.trim() : '';
 
   // Calculate skip value
   const skip = (page - 1) * limit;
+  const query = { userId };
+
+  if (search) {
+    const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pattern = new RegExp(escapedSearch, 'i');
+    query.$or = [{ title: pattern }, { description: pattern }];
+  }
 
   // Get total count of tasks
-  const totalTasks = await Task.countDocuments({ userId });
+  const totalTasks = await Task.countDocuments(query);
 
   // Get paginated tasks
-  const tasks = await Task.find({ userId })
+  const tasks = await Task.find(query)
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .lean();
 
   res.status(200).json({
     message: 'Tasks fetched successfully',
