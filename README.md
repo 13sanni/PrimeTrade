@@ -60,8 +60,4 @@ Update the links above with your deployed URLs.
 - `PUT /api/tasks/:id`
 - `DELETE /api/tasks/:id`
 
-
-
-## Author
-
-`Your Name`
+`
