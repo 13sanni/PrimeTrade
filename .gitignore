@@ -2,5 +2,16 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.*
+!.env.example
+!.env*.example
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+*.pem
+*.key
+*.p12
+*.pfx
 *.log
 .DS_Store
